@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <item name="myListView" type="id">myListView</item>
+    <item name="addCounterButton" type="id">addCounterButton</item>
+</resources>
