@@ -79,7 +79,13 @@ public class CounterList extends AppCompatActivity {
             }
         });
 
+        myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                    
+                
+            }
+        });
 
 
         FloatingActionButton addCounter = (FloatingActionButton) findViewById(R.id.addCounterButton);
