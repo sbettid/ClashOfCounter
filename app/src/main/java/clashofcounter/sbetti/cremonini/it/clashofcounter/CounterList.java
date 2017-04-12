@@ -1,11 +1,14 @@
 package clashofcounter.sbetti.cremonini.it.clashofcounter;
 
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -16,8 +19,15 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.PrintWriter;
 import java.util.ArrayList;
 
 import static android.app.PendingIntent.getActivity;
@@ -29,8 +39,11 @@ public class CounterList extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_counter_list);
         ArrayList<String> myCounterTitles = new ArrayList<String>();
-        try {
-            BufferedReader myReader = new BufferedReader(new InputStreamReader(getResources().getAssets().open("CountersList.txt")));
+
+        try{
+
+            FileInputStream os = openFileInput("CountersList.txt");
+            BufferedReader myReader = new BufferedReader(new InputStreamReader(os));
 
             String line = myReader.readLine();
 
@@ -41,8 +54,8 @@ public class CounterList extends AppCompatActivity {
 
             myReader.close();
 
-        } catch (IOException e) {
-            Log.d("IO-ERROR", "Cannot open CountersLists.txt");
+        }catch(IOException ex){
+            Log.d("IOERROR", "Cannot open input file");
         }
 
 
@@ -63,17 +76,37 @@ public class CounterList extends AppCompatActivity {
                 AlertDialog.Builder builder = new AlertDialog.Builder(CounterList.this);
                 builder.setTitle("Add Counter");
 
-                final LayoutInflater inflater = CounterList.this.getLayoutInflater();
+                //final LayoutInflater inflater = CounterList.this.getLayoutInflater();
+                //final View myView = inflater.inflate(R.layout.add_counter_prompt, null);
 
-                builder.setView(inflater.inflate(R.layout.add_counter_prompt,null));
+                final EditText myEdit = new EditText(getApplicationContext());
+
+
+
+                builder.setView(myEdit);
                 builder.setPositiveButton("Add",new DialogInterface.OnClickListener(){
 
 
                     public void onClick(DialogInterface dialog, int which) {
 
-                        EditText myEdit = (EditText) findViewById(R.id.editText);
 
-                        //get text, open file CounterList and add line
+
+                       String newName = myEdit.getText().toString();
+                //Toast.makeText(getApplicationContext(), "" + myEdit.getText().toString(), Toast.LENGTH_SHORT).show();
+                        PrintWriter myPrint = null;
+                        try{
+
+                            FileOutputStream os = openFileOutput("CountersList.txt", Context.MODE_APPEND);
+                            myPrint = new PrintWriter(os, true);
+
+                           myPrint.println(newName);
+
+                        }catch (IOException ex){
+                            Log.d("IOERROR", "Cannot write to counter list file");
+                        }
+                Intent restart = getIntent();
+                finish();
+                startActivity(restart);
 
 
                     }
