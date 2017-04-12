@@ -3,4 +3,10 @@
     <string name="listOfCounter">Your Counters</string>
     <string name="newCounterName">Type counter name</string>
     <string name="InputHintNewCounter">Counter Name</string>
+    <string name="counterTitle">COUNTER</string>
+    <string name="up"><![CDATA[UP&UP]]></string>
+    <string name="zero">0</string>
+    <string name="save">Save Stats</string>
+    <string name="see">See Stats</string>
+    <string name="currentStats">Current Statistics</string>
 </resources>

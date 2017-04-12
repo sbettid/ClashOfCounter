@@ -82,8 +82,16 @@ public class CounterList extends AppCompatActivity {
         myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
 
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    
-                
+
+                Object obj = myListView.getItemAtPosition(position);
+
+                String st = (String) obj;
+
+                Intent myIntent = new Intent(getApplicationContext(), CustomCounter.class);
+                myIntent.putExtra("title", st);
+                startActivity(myIntent);
+
+
             }
         });
 
