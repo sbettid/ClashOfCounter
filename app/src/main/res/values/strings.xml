@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Clash of Counter</string>
-    <string name="listOfCounter">Your Counters:</string>
+    <string name="listOfCounter">Your Counters</string>
     <string name="newCounterName">Type counter name</string>
     <string name="InputHintNewCounter">Counter Name</string>
 </resources>

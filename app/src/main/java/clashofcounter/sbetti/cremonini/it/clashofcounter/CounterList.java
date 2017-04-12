@@ -12,11 +12,15 @@ import android.text.Editable;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -59,11 +63,21 @@ public class CounterList extends AppCompatActivity {
         }
 
 
-        ListView myListView = (ListView) findViewById(R.id.myListView);
+        final ListView myListView = (ListView) findViewById(R.id.myListView);
 
         ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, myCounterTitles);
 
         myListView.setAdapter(myAdapter);
+        myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Object obj = myListView.getItemAtPosition(position);
+                TextView tw = (TextView)obj;
+
+                String added =  tw.toString();
+                Toast.makeText(getApplicationContext(), added + "", Toast.LENGTH_SHORT).show();
+            }
+        });
 
 
 
