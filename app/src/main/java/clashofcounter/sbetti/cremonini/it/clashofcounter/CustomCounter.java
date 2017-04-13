@@ -5,9 +5,12 @@ import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
@@ -27,6 +30,9 @@ public class CustomCounter extends AppCompatActivity {
     public TextView brombeis;
     public String title;
     public String fileName;
+    public long start = 0, stop = 0, sec = 0, min = 0;
+
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_custom_counter);
@@ -47,10 +53,32 @@ public class CustomCounter extends AppCompatActivity {
 
                                   public void onClick(View v) {
                                     counter ++;
+                                    if (start != 0) {
+                                        stop = System.nanoTime();
+                                        sec = (stop - start)/1000000000;
+                                        if (sec >= 60) {
+                                            min = sec / 60;
+                                            sec = sec - (min*60);
+                                        }
+                                        String label = "without \"" + title + "\" :(";
+                                        Toast toast = Toast.makeText(getApplicationContext(), min + " min and " + sec + " sec " + label, Toast.LENGTH_SHORT);
+                                        toast.setGravity(Gravity.CENTER, 0, 175);
+                                        toast.show();
+                                    }
+                                    start = System.nanoTime();
                                     brombeis.setText("" + counter);
                                   }
                               }
         );
+
+        ImageButton clear = (ImageButton) findViewById(R.id.imageButton);
+        clear.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                counter = 0;
+                brombeis.setText(counter + "");
+            }
+        });
 
 
 
@@ -71,6 +99,12 @@ public class CustomCounter extends AppCompatActivity {
                     myPrint.println("On date " + dateFormat.format(date)+ " the counter said: " + counter);
 
                     myPrint.close();
+
+                    if (counter >= 20) {
+                        Toast toast = Toast.makeText(getApplicationContext(), "He was onfire today!!", Toast.LENGTH_SHORT);
+                        toast.setGravity(Gravity.CENTER, 0, 175);
+                        toast.show();
+                    }
 
                 }catch (IOException ex){
                     Log.d("IOERROR", "Cannot write to output file");
