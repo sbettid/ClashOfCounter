@@ -132,9 +132,11 @@ public class CounterList extends AppCompatActivity {
                         }catch (IOException ex){
                             Log.d("IOERROR", "Cannot write to counter list file");
                         }
+
                 Intent restart = getIntent();
                 finish();
                 startActivity(restart);
+                overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
 
 
                     }
