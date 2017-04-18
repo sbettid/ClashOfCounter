@@ -1,6 +1,6 @@
 # Clash Of Counter
 
-CLash Of Counter is the app you need to count all what you need!
+Clash Of Counter is the app you need to count all what you need!
 
 # Features:
 
