@@ -61,8 +61,7 @@ public class CounterList extends AppCompatActivity {
         }catch(IOException ex){
             Log.d("IOERROR", "Cannot open input file");
         }
-
-
+        
         final ListView myListView = (ListView) findViewById(R.id.myListView);
 
         ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, myCounterTitles);
