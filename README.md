@@ -10,7 +10,7 @@ CLash Of Counter is the app you need to count all what you need!
   - see how much time passed between the last COUNT
   
   
- # Usage example:
+ # Usage examples:
  
   - count all the times a person says the same word and make fool of him/her
   - count how many times a person performs the same action
