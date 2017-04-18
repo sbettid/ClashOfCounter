@@ -51,7 +51,8 @@ public class CounterList extends AppCompatActivity {
 
             String line = myReader.readLine();
 
-            while(line != null){
+            while(line != null ) {
+               // Log.d("NEW_FILE", "Before:" + line);
                 myCounterTitles.add(line);
                 line = myReader.readLine();
             }
@@ -70,9 +71,104 @@ public class CounterList extends AppCompatActivity {
 
         myListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
             @Override
-            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
-                Toast.makeText(getApplicationContext(), "this is a toast, don't eat it", Toast.LENGTH_SHORT).show();
-                return false;
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+
+                final Object obj = myListView.getItemAtPosition(position);
+                //Log.d("POS", "" + position);
+               final int pos = position;
+
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(CounterList.this);
+                builder.setTitle("Delete counter?");
+                builder.setMessage("Are you sure?");
+                builder.setNegativeButton("Back", new DialogInterface.OnClickListener(){
+
+
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                });
+
+                builder.setPositiveButton("Delete",new DialogInterface.OnClickListener() {
+
+
+                            public void onClick(DialogInterface dialog, int which) {
+
+                                String st = (String) obj;
+
+                                String newFile = "";
+
+
+                                if(pos == 0 && myListView.getCount() == 1){
+                                    File fil = new File(getFilesDir().getAbsolutePath(),"CountersList.txt" );
+                                    fil.delete();
+                                    //Log.d("IMP", "" +fil.exists() );
+                                }
+                                else {
+
+                                    try {
+
+                                        FileInputStream os = openFileInput("CountersList.txt");
+                                        BufferedReader myReader = new BufferedReader(new InputStreamReader(os));
+
+                                        String line = myReader.readLine();
+
+                                        // Log.d("NEW_FILE", "St: " +st);
+
+                                        while (line != null) {
+                                            if (!line.equals(st)) {
+                                                Log.d("NEW_FILE", "line is different");
+                                                if (!newFile.equals(""))
+                                                    newFile += "\n" + line;
+                                                else
+                                                    newFile += line;
+                                            }
+
+                                            line = myReader.readLine();
+                                        }
+
+                                        //Log.d("NEW_FILE", newFile);
+                                        myReader.close();
+
+                                    } catch (IOException ex) {
+                                        Log.d("IOERROR", "Cannot open input file");
+                                    }
+
+                                    PrintWriter myPrint = null;
+                                    try {
+
+                                        FileOutputStream os = openFileOutput("CountersList.txt", Context.MODE_PRIVATE);
+                                        myPrint = new PrintWriter(os);
+                                        Log.d("NEW_FILE", "New:" + newFile);
+                                        myPrint.println(newFile);
+
+                                        myPrint.close();
+
+                                    } catch (IOException ex) {
+                                        Log.d("IOERROR", "Cannot write to counter list file");
+                                    }
+
+                                    //Delete file stats
+                                    String fileName = st.trim();
+                                    String dir = getFilesDir().getAbsolutePath();
+                                    File fi = new File(dir, fileName);
+
+                                    if (fi.exists()) {
+                                        fi.delete();
+                                        Log.d("DEL", "deleted");
+
+                                    }
+                                }
+                                    Intent restart = getIntent();
+                                    finish();
+                                    startActivity(restart);
+                                    overridePendingTransition(R.anim.slide_in_left, R.anim.slide_out_right);
+
+                            }
+                        });
+                    builder.show();
+                //Toast.makeText(getApplicationContext(), "this is a toast, don't eat it", Toast.LENGTH_SHORT).show();
+                return true;
             }
         });
 

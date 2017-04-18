@@ -15,6 +15,7 @@ import android.widget.Toast;
 import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
@@ -94,7 +95,6 @@ public class CustomCounter extends AppCompatActivity {
                 DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
                 Date date = new Date();
                 try{
-
                     FileOutputStream os = openFileOutput(fileName, Context.MODE_APPEND);
                     myPrint = new PrintWriter(os, true);
 
