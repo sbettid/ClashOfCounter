@@ -64,6 +64,8 @@ public class CustomCounter extends AppCompatActivity {
                                         Toast toast = Toast.makeText(getApplicationContext(), min + " min and " + sec + " sec " + label, Toast.LENGTH_SHORT);
                                         toast.setGravity(Gravity.CENTER, 0, 175);
                                         toast.show();
+                                        sec = 0;
+                                        min = 0;
                                     }
                                     start = System.nanoTime();
                                     brombeis.setText("" + counter);

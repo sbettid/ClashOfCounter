@@ -68,14 +68,12 @@ public class CounterList extends AppCompatActivity {
         ArrayAdapter<String> myAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, myCounterTitles);
 
         myListView.setAdapter(myAdapter);
-        myListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Object obj = myListView.getItemAtPosition(position);
-                TextView tw = (TextView)obj;
 
-                String added =  tw.toString();
-                Toast.makeText(getApplicationContext(), added + "", Toast.LENGTH_SHORT).show();
+        myListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(getApplicationContext(), "this is a toast, don't eat it", Toast.LENGTH_SHORT).show();
+                return false;
             }
         });
 
